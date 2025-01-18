@@ -767,15 +767,15 @@ String generateRandomPassword(int length) {
   return password;
 }
 
-// If hacking is detected, ESP32 tries to connect to WiFi with a fake password
+// If hacking is detected, ESP32 tries to connect to WiFi with a random password
 void prevent() {
   int passwordTest = 0; 
   
-  while (WiFi.status() != WL_CONNECTED && passwordTest <= 10) {
+  while (passwordTest <= 10) {
     WiFi.disconnect();
     WiFi.begin(ssid, generateRandomPassword(passwordLength));
     delay(500);
-    Serial.println("Connecting to WiFi with fake password...");
+    Serial.println("Connecting to WiFi with random password...");
     addLog("Attack preventing");
     passwordTest++;
   }
@@ -791,7 +791,7 @@ void sniffer_callback(void *buf, wifi_promiscuous_pkt_type_t type)
   wifi_promiscuous_pkt_t *pkt = (wifi_promiscuous_pkt_t *)buf;
   if (pkt->payload[0] == 0xC0){
     Serial.println("Deauth packet detected!"); // Check for deauthentication packet
-    addLog("Deauth packet detected!");
+    addLog("Deauth detected!");
     deauthTrying++;
     Serial.println(deauthTrying);
   }
@@ -841,7 +841,7 @@ void checkDuplicateSSIDs() {
 }
 
 
-//fake terminal
+//Log Data
 // Define arrays for different types of log messages
 String systemActions[] = {
   "[INFO] Installing package: ", 
@@ -886,7 +886,7 @@ const int numPackages = sizeof(packageNames) / sizeof(packageNames[0]);
 const int numIPs = sizeof(ipAddresses) / sizeof(ipAddresses[0]);
 const int numCores = sizeof(cores) / sizeof(cores[0]);
 
-String faketerminal(){
+String logData(){
   int randomActionIndex = random(0, numActions);
   int randomPackageIndex = random(0, numPackages);
   int randomIPIndex = random(0, numIPs);
@@ -1028,7 +1028,6 @@ void displayScreen1() {
             display.setCursor(LOG_BOX_X + 2, yPosition + i * LINE_SPACING);
             display.print(logEntries[index]);
         }
-
         display.display(); // Commit changes to the display
         displayScreenIndicator(); // Show screen indicator
     }
@@ -1100,16 +1099,12 @@ void loop() {
   if (switch1State == LOW && (millis() - lastDebounceTime1 > debounceDelay)) {
     lastDebounceTime1 = millis(); // Update debounce time
     currentScreen++;
-    Serial.println("Switch 1 pressed.");
-    addLog("Switch 1 pressed.");
   }
 
   // Handle switch 2 press
   if (switch2State == LOW && (millis() - lastDebounceTime2 > debounceDelay)) {
     lastDebounceTime2 = millis(); // Update debounce time
     currentScreen--;
-    Serial.println("Switch 2 pressed.");
-    addLog("Switch 2 pressed.");
   }
   
   // Check Serial input for screen changes
@@ -1132,7 +1127,7 @@ void loop() {
       displayScreen2();
       break;
   }
-  // addLog("Sensor value: " + String(random(0, 100))); //for test the log data
+
   
   //checking for reconnect to wifi 
   if (WiFi.status() != WL_CONNECTED) {
@@ -1148,7 +1143,7 @@ void loop() {
   // Infinite loop: print "Hello World" with timestamp to Serial and buffer it for the web page
   static unsigned long lastTime = 0;
   if (millis() - lastTime > 1000) {  // Print every 1 second
-    String message = getFormattedTime() + faketerminal();  // Add timestamp to message
+    String message = getFormattedTime() + logData();  // Add timestamp to message
 //    Serial.println(message);
     serialBuffer += message + "\n";  // Append to buffer
     lastTime = millis();
