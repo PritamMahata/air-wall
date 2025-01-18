@@ -8,6 +8,18 @@ This project is an ESP32-based solution designed to detect and prevent deauthent
 - **Duplicate SSID Detection**: Scans nearby Wi-Fi networks for duplicate SSIDs and checks if any of them are open.
 - **Promiscuous Mode**: Uses ESP32's promiscuous mode to monitor and capture Wi-Fi traffic for analysis.
 
+#demo
+![IMG_20250118_121628](https://github.com/user-attachments/assets/065bf3ff-b3aa-4f63-b942-fe553d10b199)
+![IMG_20250118_121642](https://github.com/user-attachments/assets/0d3fb4bd-0f51-45c7-a240-df373e2c4902)
+![IMG_20250118_121607](https://github.com/user-attachments/assets/989f9ce4-c3db-46f4-97f1-091d246f9db3)
+![IMG_20250118_124240](https://github.com/user-attachments/assets/9c606937-3c58-459b-8c00-78aecaab073a)
+![IMG_20250118_124253_1](https://github.com/user-attachments/assets/b544c906-45ba-4540-b5b8-339263691613)
+
+#Web Interface
+![Screenshot 2025-01-18 122630](https://github.com/user-attachments/assets/a93975f5-89cf-4640-9b1c-7373104592e3)
+![Screenshot 2025-01-18 122558](https://github.com/user-attachments/assets/fab96612-80a2-4db3-ae57-52845adb661f)
+
+
 ## Hardware Requirements
 - ESP32 development board
 - Micro-USB cable
@@ -32,7 +44,16 @@ In the Arduino IDE:
 ### 3. Install Required Libraries
 Ensure that the following libraries are installed in the Arduino IDE:
 - `WiFi.h`
+- `Wire.h`
 - `esp_wifi.h`
+- `WebServer.h`
+- `WebSocketsServer.h`
+- `esp_system.h`
+- `esp_spi_flash.h`
+- `ArduinoJson.h`
+- `esp_heap_caps.h`
+- `Adafruit_GFX.h`
+- `Adafruit_SSD1306.h`
 
 ### 4. Wiring
 - **LED**: The onboard LED (pin 2 on ESP32) will blink to indicate the system is running.
